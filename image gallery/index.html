@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Image Gallery</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #111;
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+    }
+    h1 {
+      margin: 0;
+      font-weight: 600;
+    }
+    .preview-top {
+      position: sticky;
+      top: 3.8rem;
+      background: #222;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 250px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease;
+      z-index: 1000;
+    }
+    .preview-top.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .preview-top img {
+      max-width: 90%;
+      max-height: 240px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+      animation: fadeIn 0.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.95);}
+      to {opacity: 1; transform: scale(1);}
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .gallery img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #111;
+      color: white;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My Responsive Gallery</h1>
+    <p>Click an image to preview it above</p>
+  </header>
+
+  <div class="preview-top active" id="previewTop">
+    <img src="" alt="Preview Image" id="previewImage" />
+  </div>
+
+  <main class="gallery" id="gallery">
+    <img src="marko-blazevic-fRr7CQGkSLs-unsplash.jpg" alt="Image 1" data-large="marko-blazevic-fRr7CQGkSLs-unsplash.jpg" />
+    <img src="alex-rybin-QDcKobbw41g-unsplash.jpg" alt="Image 2" data-large="alex-rybin-QDcKobbw41g-unsplash.jpg" />
+    <img src="steven-van-elk-N84RbvCretg-unsplash.jpg" alt="Image 3" data-large="steven-van-elk-N84RbvCretg-unsplash.jpg" />
+    <img src="deniz-demirci-bGI5j8pqw18-unsplash.jpg" alt="Image 4" data-large="deniz-demirci-bGI5j8pqw18-unsplash.jpg" />
+    <img src="marc-clinton-labiano-Amq8iI6pQn8-unsplash.jpg" alt="Image 5" data-large="marc-clinton-labiano-Amq8iI6pQn8-unsplash.jpg" />
+    <img src="nihon-graphy-i0EQSk3sN3E-unsplash.jpg" alt="Image 6" data-large="nihon-graphy-i0EQSk3sN3E-unsplash.jpg" />
+    <img src="joel-swick-_jvqWGGUDLo-unsplash.jpg" alt="Image 7" data-large="joel-swick-_jvqWGGUDLo-unsplash.jpg" />
+    <img src="cheisan-pulinario-NNU5uDAv_Dg-unsplash.jpg" alt="Image 8" data-large="cheisan-pulinario-NNU5uDAv_Dg-unsplash.jpg" />
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Suman | My Dear Gallery</p>
+  </footer>
+
+  <script>
+    const gallery = document.getElementById('gallery');
+    const previewTop = document.getElementById('previewTop');
+    const previewImage = document.getElementById('previewImage');
+
+    function setPreview(src) {
+      previewImage.src = src;
+      previewTop.classList.add('active');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const firstImage = gallery.querySelector('img');
+      if (firstImage) {
+        setPreview(firstImage.dataset.large);
+      }
+    });
+
+    gallery.addEventListener('click', e => {
+      if (e.target.tagName === 'IMG') {
+        setPreview(e.target.dataset.large);
+        // scrollIntoView removed to stop auto scroll
+      }
+    });
+
+    // Optional: click on preview area to hide it
+    // previewTop.addEventListener('click', () => {
+    //   previewTop.classList.remove('active');
+    //   previewImage.src = '';
+    // });
+  </script>
+
+</body>
+</html>
